@@ -8,6 +8,10 @@ warn() { echo $1; state=1; }
 dir=$(mktemp -d)
 trap "rm -rf $dir" 0
 
+testdir=kadai6_test
+termdir=${testdir}/pseudoterm
+scriptdir=${testdir}/script
+
 check-report() {
     if [ ! -f report-$1.txt ]; then
         $2 "kadai-$1: Missing report-$1.txt."
@@ -25,10 +29,11 @@ kadai-a() {
             warn "kadai-a: Missing Makefile"
         fi
 
-        make count > /dev/null 2>&1
+        local bin=count
+        make $bin > /dev/null 2>&1
 
-        if [ ! -f count ]; then
-            warn "kadai-a: Failed to generate the binary(count) with '$ make count'"
+        if [ ! -f $bin ]; then
+            warn "kadai-a: Failed to generate the binary($bin) with '$ make $bin'"
         fi
 
         local errno=0
@@ -41,8 +46,8 @@ kadai-a() {
 
         make clean > /dev/null 2>&1
 
-        if [ -f count ]; then
-            warn "kadai-a: Failed to remove the binary(count) with '$ make clean'."
+        if [ -f $bin ]; then
+            warn "kadai-a: Failed to remove the binary($bin) with '$ make clean'."
         fi
 
         if [ ! -z "`find . -name \*.o`" ]; then
@@ -70,11 +75,11 @@ kadai-b() {
             warn "kadai-b: Missing Makefile"
         fi
 
-        local shell=ish
-        make $shell > /dev/null 2>&1
+        local bin=ish
+        make $bin > /dev/null 2>&1
 
-        if [ ! -f $shell ]; then
-            warn "kadai-b: Failed to generate the binary($shell) with '$ make $shell'"
+        if [ ! -f $bin ]; then
+            warn "kadai-b: Failed to generate the binary($bin) with '$ make $bin'"
         fi
 
         local errno=0
@@ -94,8 +99,8 @@ kadai-b() {
 
         make clean > /dev/null 2>&1
 
-        if [ -f $shell ]; then
-            warn "kadai-b: Failed to remove the binary($shell) with '$ make clean'."
+        if [ -f $bin ]; then
+            warn "kadai-b: Failed to remove the binary($bin) with '$ make clean'."
         fi
 
         if [ ! -z "`find . -name \*.o`" ]; then
@@ -123,11 +128,11 @@ kadai-c() {
             warn "kadai-c: Missing Makefile"
         fi
 
-        local shell=ish
-        make $shell > /dev/null 2>&1
+        local bin=ish
+        make $bin > /dev/null 2>&1
 
-        if [ ! -f $shell ]; then
-            warn "kadai-c: Failed to generate the binary($shell) with '$ make $shell'"
+        if [ ! -f $bin ]; then
+            warn "kadai-c: Failed to generate the binary($bin) with '$ make $bin'"
         fi
 
         local errno=0
@@ -141,8 +146,8 @@ kadai-c() {
 
         make clean > /dev/null 2>&1
 
-        if [ -f $shell ]; then
-            warn "kadai-c: Failed to remove the binary($shell) with '$ make clean'."
+        if [ -f $bin ]; then
+            warn "kadai-c: Failed to remove the binary($bin) with '$ make clean'."
         fi
 
         if [ ! -z "`find . -name \*.o`" ]; then
@@ -170,11 +175,11 @@ kadai-d() {
             warn "kadai-d: Missing Makefile"
         fi
 
-        local shell=ish
-        make $shell > /dev/null 2>&1
+        local bin=ish
+        make $bin > /dev/null 2>&1
 
-        if [ ! -f $shell ]; then
-            warn "kadai-d: Failed to generate the binary($shell) with '$ make $shell'"
+        if [ ! -f $bin ]; then
+            warn "kadai-d: Failed to generate the binary($bin) with '$ make $bin'"
         fi
 
         local errno=0
@@ -194,8 +199,8 @@ kadai-d() {
 
         make clean > /dev/null 2>&1
 
-        if [ -f $shell ]; then
-            warn "kadai-d: Failed to remove the binary($shell) with '$ make clean'."
+        if [ -f $bin ]; then
+            warn "kadai-d: Failed to remove the binary($bin) with '$ make clean'."
         fi
 
         if [ ! -z "`find . -name \*.o`" ]; then
