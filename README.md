@@ -11,8 +11,8 @@ Shell.
 
 ## Assignment
 
-- Slide: [here]() (ECCS email required) 
-- Date assigned: ***2023/05/15***
+- Slide: [here](https://docs.google.com/presentation/d/1qx4lyJYG1FFtCrl6KFL5sqIouObc0eC1hE2Coa8CMBs/edit?usp=sharing) (ECCS email required) 
+- Date assigned: ***2023/05/22***
 - Date due: ***2023/06/05 23:59*** (tentative)
 
 ## Notes
