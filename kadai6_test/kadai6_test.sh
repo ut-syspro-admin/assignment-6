@@ -39,9 +39,9 @@ kadai-a() {
         local errno=0
         check-ish a
         if [[ $errno -eq 10 ]]; then
-            warn "kadai-a: Count did not exit after 10 ctrl-c"
+            warn "kadai-a: count did not exit after 10 ctrl-c"
         elif [[ $errno -ne 0 ]]; then
-            warn "kadai-a: Count exited after $errno ctrl-c"
+            warn "kadai-a: count exited after $errno ctrl-c"
         fi
 
         make clean > /dev/null 2>&1
@@ -86,7 +86,7 @@ kadai-b() {
         check-ish b
         case $errno in
         1)
-            warn "kadai-b: ish was not foreground process after /bin/ls";;
+            warn "kadai-b: ish was not the foreground process after /bin/ls";;
         2)
             warn "kadai-b: ish was killed by ctrl-c (SIGINT)";;
         3)
@@ -141,7 +141,7 @@ kadai-c() {
         1)
             warn "kadai-c: /bin/sleep 10 & was not executed as a background process";;
         2)
-            warn "kadai-c: ish was not foreground process after /bin/sleep 10 &";;
+            warn "kadai-c: ish was not the foreground process after /bin/sleep 10 &";;
         esac
 
         make clean > /dev/null 2>&1
@@ -188,13 +188,13 @@ kadai-d() {
         1)
             warn "kadai-d: ish was stopped by ctrl-z (SIGSTOP)";;
         2)
-            warn "kadai-d: ish was not foreground process after suspending /bin/sleep 10";;
+            warn "kadai-d: ish was not the foreground process after suspending /bin/sleep 10";;
         3)
             warn "kadai-d: sleep was killed by ctrl-z (SIGSTOP)";;
         4)
-            warn "kadai-d: ish was foreground process after bg";;
+            warn "kadai-d: ish was the foreground process after bg";;
         5)
-            warn "kadai-d: sleep is not done after bg";;
+            warn "kadai-d: sleep was not done after bg";;
         esac
 
         make clean > /dev/null 2>&1
@@ -216,6 +216,55 @@ kadai-d() {
         popd > /dev/null 2>&1
     else
         warn "kadai-d: No 'kadai-bcde' directory"
+    fi
+}
+
+kadai-e() {
+    if [ -d kadai-bcde ] && [ -f kadai-bcde/report-e.txt ]; then
+        cp -r kadai-bcde $dir
+        pushd $dir/kadai-bcde > /dev/null 2>&1
+
+        if [ ! -f Makefile ]; then
+            warn "kadai-e: Missing Makefile"
+        fi
+
+        local bin=ish
+        make $bin > /dev/null 2>&1
+
+        if [ ! -f $bin ]; then
+            warn "kadai-e: Failed to generate the binary($bin) with '$ make $bin'"
+        fi
+
+        local errno=0
+        check-ish e
+        case $errno in
+        1)
+            warn "kadai-e: sleep was not executed at the background";;
+        2)
+            warn "kadai-e: ish was not the foreground process after executing sleep at the background";;
+        3)
+            warn "kadai-e: sleep was not the foreground process after fg";;
+        4)
+            warn "kadai-e: ish was not the foreground process in the end";;
+        esac
+
+        make clean > /dev/null 2>&1
+
+        if [ -f $bin ]; then
+            warn "kadai-e: Failed to remove the binary($bin) with '$ make clean'."
+        fi
+
+        if [ ! -z "`find . -name \*.o`" ]; then
+            warn "kadai-e: Failed to remove object files(*.o) with '$ make clean'."
+        fi
+
+        if [ `grep '\-Wall' Makefile | wc -l` -eq 0 ]; then
+            warn "kadai-e: Missing '-Wall' option."
+        fi
+
+        check-report e warn
+
+        popd > /dev/null 2>&1
     fi
 }
 

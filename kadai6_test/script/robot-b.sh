@@ -1,7 +1,7 @@
 #!/bin/bash
 #set -o errexit
-# set -o nounset
-# set -o xtrace
+#set -o nounset
+#set -o xtrace
 
 . $1
 
@@ -40,4 +40,3 @@ main() {
 }
 
 main "$@"
-
