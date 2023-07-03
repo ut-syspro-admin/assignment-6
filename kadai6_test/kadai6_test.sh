@@ -192,7 +192,7 @@ kadai-d() {
         3)
             warn "kadai-d: sleep was killed by ctrl-z (SIGSTOP)";;
         4)
-            warn "kadai-d: ish was the foreground process after bg";;
+            warn "kadai-d: ish was not the foreground process after bg";;
         5)
             warn "kadai-d: sleep was not done after bg";;
         esac
